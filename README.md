@@ -100,6 +100,37 @@ def text_to_image(prompt):
 
 text_to_image("a cozy cabin in the snowy mountains at sunset")
 ```
+avatar_customization.py
+```
+import avatarify
+import numpy as np
+
+class AvatarCustomizer:
+    def __init__(self):
+        self.avatar_model = avatarify.load_avatar_model()
+
+    def set_avatar_appearance(self, model_file):
+        self.avatar_model = avatarify.load_avatar_model(model_file)
+
+    def apply_expression(self, expression_type, intensity=1.0):
+        expression = np.array([expression_type, intensity])
+        avatarify.apply_expression(self.avatar_model, expression)
+
+    def animate_avatar(self, animation_data):
+        avatarify.animate(self.avatar_model, animation_data)
+
+    def reset_avatar(self):
+        self.avatar_model = avatarify.load_avatar_model()
+
+# Example usage
+if __name__ == "__main__":
+    avatar_customizer = AvatarCustomizer()
+    avatar_customizer.set_avatar_appearance("custom_avatar_model.obj")
+    avatar_customizer.apply_expression("smile", intensity=0.8)
+    animation_sequence = {"type": "wave", "duration": 2.0}
+    avatar_customizer.animate_avatar(animation_sequence)
+```
+
 
 ## License
 

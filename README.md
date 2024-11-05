@@ -82,6 +82,25 @@ def speech_to_text():
     return recognizer.recognize_google(audio)
 ```
 
+text_to_image.py
+```
+import openai
+from PIL import Image
+import requests
+from io import BytesIO
+
+openai.api_key = 'YOUR_OPENAI_API_KEY'
+
+def text_to_image(prompt):
+    response = openai.Image.create(prompt=prompt, n=1, size="1024x1024")
+    image_url = response['data'][0]['url']
+    image_data = requests.get(image_url).content
+    image = Image.open(BytesIO(image_data))
+    image.show()
+
+text_to_image("a cozy cabin in the snowy mountains at sunset")
+```
+
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.

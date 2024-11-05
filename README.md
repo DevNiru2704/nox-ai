@@ -131,6 +131,42 @@ if __name__ == "__main__":
     avatar_customizer.animate_avatar(animation_sequence)
 ```
 
+nox_personality.py
+```
+import json
+from transformers import GPT2LMHeadModel, GPT2Tokenizer
+
+class NoxPersonality:
+    def __init__(self, model_name='gpt2'):
+        self.tokenizer = GPT2Tokenizer.from_pretrained(model_name)
+        self.model = GPT2LMHeadModel.from_pretrained(model_name)
+        self.personality_traits = {}
+
+    def load_personality_traits(self, traits_file):
+        with open(traits_file, 'r') as file:
+            self.personality_traits = json.load(file)
+
+    def generate_response(self, user_input):
+        input_ids = self.tokenizer.encode(user_input, return_tensors='pt')
+        response_ids = self.model.generate(input_ids, max_length=50, num_return_sequences=1)
+        response = self.tokenizer.decode(response_ids[0], skip_special_tokens=True)
+        return response
+
+    def customize_conversation_style(self, style):
+        self.personality_traits['conversation_style'] = style
+
+    def get_personality_summary(self):
+        return self.personality_traits
+
+# Example usage
+if __name__ == "__main__":
+    nox = NoxPersonality()
+    nox.load_personality_traits("personality_traits.json")
+    user_input = "What's your favorite hobby?"
+    response = nox.generate_response(user_input)
+    print(response)
+```
+
 
 ## License
 

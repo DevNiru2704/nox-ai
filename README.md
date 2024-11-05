@@ -65,9 +65,22 @@ NOX is designed to be adaptable to your preferences. You can customize various a
 - Modify NOX's 3D avatar appearance and animations in the `avatar_customization.py` file.
 - Fine-tune NOX's conversation style and knowledge base in the `nox_personality.py` file.
 
-## Contributing
+speech_synthesis.py
+```
+import pyttsx3
+import speech_recognition as sr
 
-We welcome contributions to enhance NOX's capabilities! Please feel free to submit a Pull Request or open an Issue for bugs, feature requests, or improvements.
+def text_to_speech(text):
+    engine = pyttsx3.init()
+    engine.say(text)
+    engine.runAndWait()
+
+def speech_to_text():
+    recognizer = sr.Recognizer()
+    with sr.Microphone() as source:
+        audio = recognizer.listen(source)
+    return recognizer.recognize_google(audio)
+```
 
 ## License
 
